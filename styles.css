@@ -17,7 +17,7 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
     "Segoe UI", sans-serif;
   background:
-    radial-gradient(circle at top left, #1f2937 0, #050816 40%, #020617 100%);
+    radial-gradient(circle at top left, #1f2937 0, #ffffff 40%, #e2e7ff 100%);
   color: #e5e7eb;
   -webkit-font-smoothing: antialiased;
 }
@@ -60,7 +60,6 @@ p {
 /* ==============================
    THEME VARIABLES
    ============================== */
-
 :root {
   --bg: #050816;
   --bg-alt: #0b1020;
@@ -78,6 +77,21 @@ p {
   --gradient-accent: linear-gradient(135deg, #6366f1, #ec4899);
   --gradient-soft: radial-gradient(circle at 0 0, #4f46e5 0, transparent 55%),
     radial-gradient(circle at 100% 0, #be185d 0, transparent 55%);
+  --body-bg: radial-gradient(
+    circle at top left,
+    #1f2937 0,
+    #050816 40%,
+    #020617 100%
+  );
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
+  background: var(--body-bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ==============================
@@ -284,6 +298,49 @@ p {
   flex-direction: column;
   gap: 0.22rem;
   padding: 0.2rem;
+}
+
+/* Theme toggle button */
+
+.theme-toggle {
+  margin-left: 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(15, 23, 42, 0.98);
+  border-color: rgba(129, 140, 248, 0.9);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.8);
+  transform: translateY(-1px);
+}
+
+.theme-toggle-label {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* On small screens, keep toggle aligned nicely */
+@media (max-width: 768px) {
+  .theme-toggle {
+    margin-left: 0.6rem;
+    padding: 0.3rem 0.7rem;
+  }
 }
 
 .nav-toggle span {
@@ -931,4 +988,98 @@ textarea:focus {
   .hero-avatar-placeholder {
     border-radius: 24px;
   }
+}
+
+/* ==============================
+   LIGHT THEME
+   ============================== */
+
+/* Change the main variables when light theme is active */
+:root.light-theme {
+  --bg: #ffffff;
+  --bg-alt: #f3f4f6;
+  --bg-soft: #e5e7eb;
+  --surface: #ffffff;
+  --body-bg: #f9fafb;
+  --text: #0f172a;
+  --muted: #6b7280;
+  --border: rgba(148, 163, 184, 0.6);
+  --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+/* Header & footer adjust to light */
+.light-theme .header {
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.light-theme .footer {
+  background: #f3f4f6;
+  border-top: 1px solid rgba(148, 163, 184, 0.5);
+}
+
+.light-theme .footer-inner {
+  color: var(--muted);
+}
+
+/* Nav toggle + theme toggle adapt to light background */
+.light-theme .nav-toggle span {
+  background: #111827;
+}
+
+.light-theme .theme-toggle {
+  background: #ffffff;
+  color: #111827;
+  border-color: rgba(148, 163, 184, 0.8);
+}
+
+.light-theme .theme-toggle:hover {
+  background: #e5e7eb;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+}
+
+/* Cards / surfaces become white */
+.light-theme .about-highlights,
+.light-theme .skills-card,
+.light-theme .project-content,
+.light-theme .contact-info,
+.light-theme .contact-form {
+  background: #ffffff;
+  box-shadow: 0 16px 35px rgba(15, 23, 42, 0.06);
+}
+
+/* Project card border gradient softened */
+.light-theme .project-card {
+  background-image: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.2),
+    rgba(236, 72, 153, 0.12)
+  );
+}
+
+/* Hero image container adapted for light */
+.light-theme .hero-avatar-placeholder {
+  background:
+    radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.18), transparent 55%),
+    radial-gradient(circle at 100% 0, rgba(236, 72, 153, 0.18), transparent 55%),
+    #e5e7eb;
+  box-shadow: 0 18px 55px rgba(15, 23, 42, 0.14);
+}
+
+/* Form fields on light */
+.light-theme input,
+.light-theme textarea {
+  background: #ffffff;
+  border-color: rgba(148, 163, 184, 0.8);
+  color: #0f172a;
+}
+
+.light-theme input::placeholder,
+.light-theme textarea::placeholder {
+  color: rgba(156, 163, 175, 0.9);
+}
+
+/* Logo color in light theme */
+.light-theme .nav-logo a {
+  color: #0f172a; /* dark navy text for light background */
 }
