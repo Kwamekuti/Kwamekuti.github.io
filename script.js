@@ -8,6 +8,42 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==============================
+     THEME TOGGLE (DARK / LIGHT)
+     ============================== */
+  const root = document.documentElement; // <html>
+  const themeToggle = document.querySelector(".theme-toggle");
+  const themeLabel = document.querySelector(".theme-toggle-label");
+
+  function applyTheme(theme) {
+    if (theme === "light") {
+      root.classList.add("light-theme");
+      if (themeLabel) themeLabel.textContent = "Light";
+    } else {
+      // default: dark
+      root.classList.remove("light-theme");
+      if (themeLabel) themeLabel.textContent = "Dark";
+    }
+  }
+
+  // On load: use saved theme if available
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "light" || savedTheme === "dark") {
+    applyTheme(savedTheme);
+  } else {
+    // default to dark
+    applyTheme("dark");
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const isLight = root.classList.contains("light-theme");
+      const newTheme = isLight ? "dark" : "light";
+      applyTheme(newTheme);
+      localStorage.setItem("theme", newTheme);
+    });
+  }
+
+  /* ==============================
      MOBILE NAV TOGGLE
      ============================== */
   const body = document.body;
