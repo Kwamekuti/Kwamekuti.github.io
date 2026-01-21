@@ -26,12 +26,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // On load: use saved theme if available
-  const savedTheme = localStorage.getItem("theme");
+    const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "light" || savedTheme === "dark") {
     applyTheme(savedTheme);
   } else {
-    // default to dark
-    applyTheme("dark");
+    // default to light
+    applyTheme("light");
   }
 
   if (themeToggle) {

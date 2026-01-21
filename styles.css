@@ -60,29 +60,26 @@ p {
 /* ==============================
    THEME VARIABLES
    ============================== */
-:root {
-  --bg: #050816;
-  --bg-alt: #0b1020;
-  --bg-soft: rgba(15, 23, 42, 0.9);
-  --surface: #020617;
+
+   :root {
+  /* DARK THEME (default when .light-theme is NOT present) */
+  --bg: #000000;
+  --bg-alt: #050505;
+  --bg-soft: #0b0b0b;
+  --surface: #050505;
   --accent: #6366f1;
   --accent-2: #ec4899;
-  --accent-soft: rgba(99, 102, 241, 0.15);
-  --text: #e5e7eb;
+  --accent-soft: rgba(99, 102, 241, 0.2);
+  --text: #f9fafb;
   --muted: #9ca3af;
-  --border: rgba(148, 163, 184, 0.35);
+  --border: rgba(148, 163, 184, 0.4);
   --radius-lg: 18px;
   --radius-md: 12px;
-  --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.82);
+  --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.9);
   --gradient-accent: linear-gradient(135deg, #6366f1, #ec4899);
   --gradient-soft: radial-gradient(circle at 0 0, #4f46e5 0, transparent 55%),
     radial-gradient(circle at 100% 0, #be185d 0, transparent 55%);
-  --body-bg: radial-gradient(
-    circle at top left,
-    #1f2937 0,
-    #050816 40%,
-    #020617 100%
-  );
+  --body-bg: #000000; /* pure black */
 }
 
 body {
@@ -93,7 +90,6 @@ body {
   color: var(--text);
   -webkit-font-smoothing: antialiased;
 }
-
 /* ==============================
    LAYOUT HELPERS
    ============================== */
@@ -225,14 +221,12 @@ body {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: linear-gradient(
-      to bottom,
-      rgba(5, 8, 22, 0.98),
-      rgba(5, 8, 22, 0.9),
-      transparent
-    );
+  background:
+    radial-gradient(circle at top left, rgba(99, 102, 241, 0.14), transparent 55%),
+    rgba(0, 0, 0, 0.82);
   backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.4);
 }
 
 .nav {
@@ -366,9 +360,18 @@ body {
 }
 
 .hero-content {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
+  gap: 1.5rem;
+  padding: 1.6rem 1.9rem;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(circle at top left, rgba(99, 102, 241, 0.24), transparent 60%),
+    radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.18), transparent 60%),
+    rgba(0, 0, 0, 0.96);
+  box-shadow: var(--shadow-soft);
 }
 
 .hero-kicker {
@@ -458,6 +461,8 @@ body {
 /* Hero right side "avatar" / visual */
 /* Hero right side "avatar" / visual */
 
+/* Hero right side "avatar" / visual */
+
 .hero-image {
   position: relative;
   display: flex;
@@ -466,52 +471,107 @@ body {
 
 .hero-avatar-placeholder {
   position: relative;
-  width: min(290px, 80vw);
-  aspect-ratio: 3 / 4;
-  border-radius: 30px;
+  width: clamp(220px, 32vw, 340px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
   background:
-    radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.5), transparent 55%),
-    radial-gradient(circle at 100% 0, rgba(236, 72, 153, 0.5), transparent 55%),
+    radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.2), transparent 55%),
+    radial-gradient(circle at 100% 0, rgba(236, 72, 153, 0.2), transparent 55%),
     var(--surface);
-  box-shadow: 0 28px 90px rgba(15, 23, 42, 0.95);
+  box-shadow: 0 18px 55px rgba(15, 23, 42, 0.85);
   overflow: hidden;
 }
 
-/* subtle lighting over the photo */
+/* soft light from top */
 .hero-avatar-placeholder::before {
   content: "";
   position: absolute;
   inset: 0;
   background: radial-gradient(
     circle at 50% 0,
-    rgba(15, 23, 42, 0.4),
+    rgba(255, 255, 255, 0.5),
     transparent 60%
   );
   mix-blend-mode: soft-light;
   pointer-events: none;
 }
 
-/* fade the bottom of the image into the background */
-.hero-avatar-placeholder::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 40%;
-  background: linear-gradient(
-    to bottom,
-    rgba(5, 8, 22, 0),
-    rgba(5, 8, 22, 0.98)
-  );
-  pointer-events: none;
-}
-
+/* photo itself */
 .hero-avatar-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: translateY(6px); /* slight push down so more torso shows */
   filter: contrast(1.05) saturate(1.05);
+  transform: translateY(4px); /* small adjust if needed */
 }
+
+/* ==============================
+   HIGHLIGHTS / RECENT WORK
+   ============================== 
+
+.highlights {
+  background: radial-gradient(
+    circle at 100% 0,
+    rgba(21, 141, 47, 0.12),
+    transparent 55%
+  );
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.6rem;
+}
+
+.highlight-card {
+  padding: 1.25rem 1.4rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.98),
+      rgba(15, 23, 42, 0.92)
+    );
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.highlight-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.highlight-meta {
+  font-size: 0.83rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.highlight-description {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.highlight-extra {
+  font-size: 0.84rem;
+  color: rgba(156, 163, 175, 0.95);
+  margin-top: 0.2rem;
+}
+
+
+.highlight-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.9);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}*/
+
+
 /* ==============================
    ABOUT
    ============================== */
@@ -995,6 +1055,7 @@ textarea:focus {
    ============================== */
 
 /* Change the main variables when light theme is active */
+/* LIGHT THEME OVERRIDES */
 :root.light-theme {
   --bg: #ffffff;
   --bg-alt: #f3f4f6;
@@ -1009,10 +1070,13 @@ textarea:focus {
 
 /* Header & footer adjust to light */
 .light-theme .header {
-  background: rgba(255, 255, 255, 0.96);
-  border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+  background:
+    radial-gradient(circle at top left, rgba(99, 102, 241, 0.09), transparent 55%),
+    rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.45);
 }
-
 .light-theme .footer {
   background: #f3f4f6;
   border-top: 1px solid rgba(148, 163, 184, 0.5);
@@ -1047,7 +1111,11 @@ textarea:focus {
   background: #ffffff;
   box-shadow: 0 16px 35px rgba(15, 23, 42, 0.06);
 }
-
+.light-theme .hero-content {
+  background: #ffffff;
+  border-color: rgba(148, 163, 184, 0.55);
+  box-shadow: 0 24px 55px rgba(15, 23, 42, 0.12);
+}
 /* Project card border gradient softened */
 .light-theme .project-card {
   background-image: linear-gradient(
