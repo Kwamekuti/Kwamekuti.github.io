@@ -505,72 +505,9 @@ body {
   transform: translateY(4px); /* small adjust if needed */
 }
 
-/* ==============================
-   HIGHLIGHTS / RECENT WORK
-   ============================== 
-
-.highlights {
-  background: radial-gradient(
-    circle at 100% 0,
-    rgba(21, 141, 47, 0.12),
-    transparent 55%
-  );
+.hero-avatar-img {
+  border-radius: 50%;
 }
-
-.highlights-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.6rem;
-}
-
-.highlight-card {
-  padding: 1.25rem 1.4rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  background: linear-gradient(
-      135deg,
-      rgba(15, 23, 42, 0.98),
-      rgba(15, 23, 42, 0.92)
-    );
-  box-shadow: var(--shadow-soft);
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-}
-
-.highlight-title {
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.highlight-meta {
-  font-size: 0.83rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(148, 163, 184, 0.9);
-}
-
-.highlight-description {
-  font-size: 0.9rem;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.highlight-extra {
-  font-size: 0.84rem;
-  color: rgba(156, 163, 175, 0.95);
-  margin-top: 0.2rem;
-}
-
-
-.highlight-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.9);
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease;
-}*/
-
 
 /* ==============================
    ABOUT
