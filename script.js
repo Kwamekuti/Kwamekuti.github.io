@@ -8,6 +8,42 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ==============================
+     HERO ROLE ROTATOR
+     ============================== */
+  const roleEl = document.querySelector(".hero-kicker-rotating");
+  if (roleEl) {
+    const roles = [
+      "Web Developer",
+      "Front-end Developer",
+      "Upcoming Software Developer",
+      "UI/UX Designer",
+      "Graphic Designer",
+      "Video Editor",
+      "Photographer"
+    ];
+
+    let index = 0;
+    roleEl.textContent = roles[index];
+    roleEl.classList.add("is-visible");
+
+    setInterval(() => {
+      const nextIndex = (index + 1) % roles.length;
+
+      // Fade out current
+      roleEl.classList.remove("is-visible");
+      roleEl.classList.add("is-hidden");
+
+      // After fade out, change text and fade in
+      setTimeout(() => {
+        roleEl.textContent = roles[nextIndex];
+        roleEl.classList.remove("is-hidden");
+        roleEl.classList.add("is-visible");
+        index = nextIndex;
+      }, 260); // this should match the CSS transition duration
+    }, 2600); // change every 2.6 seconds
+  }
+  
+  /* ==============================
      THEME TOGGLE (DARK / LIGHT)
      ============================== */
   const root = document.documentElement; // <html>
