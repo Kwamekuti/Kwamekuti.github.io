@@ -6,7 +6,59 @@ document.addEventListener("DOMContentLoaded", () => {
   if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
   }
+  /* ==============================
+     HERO TYPING EFFECT
+     ============================== */
+  const typingEl = document.querySelector(".hero-kicker-typing");
 
+  if (typingEl) {
+    const roles = [
+      "Front-end Developer",
+      "UI/UX Designer",
+      "Graphic Designer",
+      "Video Editor",
+      "Photographer",
+      "Upcoming Software Developer"
+    ];
+
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function type() {
+      const currentRole = roles[roleIndex];
+
+      if (!isDeleting) {
+        // Typing
+        typingEl.textContent = currentRole.slice(0, charIndex + 1);
+        charIndex++;
+
+        if (charIndex === currentRole.length) {
+          // Pause at full word
+          setTimeout(() => {
+            isDeleting = true;
+            type();
+          }, 1500);
+          return;
+        }
+      } else {
+        // Deleting
+        typingEl.textContent = currentRole.slice(0, charIndex - 1);
+        charIndex--;
+
+        if (charIndex === 0) {
+          isDeleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+        }
+      }
+
+      const delay = isDeleting ? 60 : 110; // speed: delete faster than type
+      setTimeout(type, delay);
+    }
+
+    // Small initial delay before starting
+    setTimeout(type, 500);
+  }
   /* ==============================
      HERO ROLE ROTATOR
      ============================== */
