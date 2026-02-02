@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setInterval(() => {
       const nextIndex = (index + 1) % roles.length;
-
       // Fade out current
       roleEl.classList.remove("is-visible");
       roleEl.classList.add("is-hidden");
