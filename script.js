@@ -207,6 +207,99 @@ document.addEventListener("DOMContentLoaded", () => {
     revealEls.forEach((el) => el.classList.add("visible"));
   }
 
+
+   const clientsTrack = document.querySelector(".clients-track");
+const prevClientsBtn = document.querySelector(".clients-arrow--prev");
+const nextClientsBtn = document.querySelector(".clients-arrow--next");
+
+if (clientsTrack) {
+  const cards = Array.from(clientsTrack.querySelectorAll(".client-card"));
+  const count = cards.length;
+
+  if (count > 1) {
+    // Clone before & after
+    cards.forEach(card => {
+      clientsTrack.appendChild(card.cloneNode(true));
+      clientsTrack.insertBefore(card.cloneNode(true), clientsTrack.firstChild);
+    });
+
+    let allCards = Array.from(clientsTrack.querySelectorAll(".client-card"));
+    let cardWidth = allCards[0].offsetWidth +
+      parseInt(getComputedStyle(allCards[0]).marginRight || 0);
+
+    let index = count; // start in middle
+    let autoId = null;
+
+    function scrollToIndex(i, smooth = true) {
+      clientsTrack.scrollTo({
+        left: i * cardWidth,
+        behavior: smooth ? "smooth" : "auto",
+      });
+      index = i;
+    }
+
+    function normalize() {
+      if (index >= count * 2) {
+        scrollToIndex(count, false);
+      }
+      if (index <= count - 1) {
+        scrollToIndex(count * 2 - 1, false);
+      }
+    }
+
+    function next() {
+      scrollToIndex(index + 1);
+      setTimeout(normalize, 400);
+    }
+
+    function prev() {
+      scrollToIndex(index - 1);
+      setTimeout(normalize, 400);
+    }
+
+    function startAuto() {
+      if (!autoId) autoId = setInterval(next, 3000);
+    }
+
+    function stopAuto() {
+      clearInterval(autoId);
+      autoId = null;
+    }
+
+    // Init
+    scrollToIndex(index, false);
+    startAuto();
+
+    // Arrows
+    prevClientsBtn?.addEventListener("click", () => {
+      stopAuto();
+      prev();
+      startAuto();
+    });
+
+    nextClientsBtn?.addEventListener("click", () => {
+      stopAuto();
+      next();
+      startAuto();
+    });
+
+    // Pause on hover
+    clientsTrack.addEventListener("mouseenter", stopAuto);
+    clientsTrack.addEventListener("mouseleave", startAuto);
+
+    // Resize fix
+    window.addEventListener("resize", () => {
+      cardWidth = allCards[0].offsetWidth +
+        parseInt(getComputedStyle(allCards[0]).marginRight || 0);
+      scrollToIndex(index, false);
+    });
+  }
+}
+
+
+
+
+  
   /* ==============================
      CONTACT FORM (FRONT-END ONLY)
      ============================== */
