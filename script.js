@@ -130,6 +130,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+const fadeElements = document.querySelectorAll('.fade-in');
+
+window.addEventListener('scroll', () => {
+  fadeElements.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+    if (top < windowHeight - 100) {
+      el.classList.add('visible');
+    }
+  });
+});
+
+
+
+
   /* ==============================
      MOBILE NAV TOGGLE
      ============================== */

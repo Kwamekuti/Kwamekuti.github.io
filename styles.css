@@ -616,93 +616,177 @@ body {
   gap: 2.3rem;
 }
 
-.about-text p {
-  color: var(--muted);
-  font-size: 0.97rem;
-  line-height: 1.9;
-  margin-bottom: 0.9rem;
+
+.about-section {
+  padding: 80px 20px;
+  background: #f9f9f9;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.about-highlights {
-  padding: 1.25rem 1.4rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  background: radial-gradient(
-      circle at 0 0,
-      rgba(79, 70, 229, 0.42),
-      transparent 60%
-    ),
-    rgba(15, 23, 42, 0.96);
-  box-shadow: var(--shadow-soft);
+.about-section .container {
+  max-width: 700px;
+  margin: 0 auto;
 }
 
-.about-highlights h3 {
-  font-size: 1.05rem;
-  margin-bottom: 0.75rem;
+.about-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #111827; /* dark shade */
+  font-weight: 600;
 }
 
-.about-highlights ul {
-  display: grid;
-  gap: 0.5rem;
-  padding-left: 0.1rem;
+.about-section p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #374151; /* soft dark gray */
 }
 
-.about-highlights li {
-  font-size: 0.9rem;
-  color: var(--muted);
-  position: relative;
-  padding-left: 1.1rem;
+@media (max-width: 768px) {
+  .about-section h2 {
+    font-size: 2rem;
+  }
+
+  .about-section p {
+    font-size: 1rem;
+  }
 }
 
-.about-highlights li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--accent-2);
-}
 
 /* ==============================
    SKILLS
    ============================== */
 
 .skills {
-  background: radial-gradient(circle at 0 0, rgba(236, 72, 153, 0.18), transparent 65%);
+  background: radial-gradient(
+    circle at 0 0,
+    rgba(236, 72, 153, 0.18),
+    transparent 65%
+  );
+}
+
+/* Make this section a bit narrower so cards are not against the page edges */
+.skills .container {
+  width: min(1040px, 100% - 4rem);
+}
+
+.skills .section-inner {
+  gap: 2.2rem;
 }
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.7rem;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1.6rem;
 }
 
-.skills-card {
-  padding: 1.3rem 1.4rem;
+/* Base card */
+.skill-card {
+  --skill-color1: var(--accent);
+  --skill-color2: var(--accent-2);
+
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  background: linear-gradient(
+  border: 1px solid transparent;
+  background:
+    linear-gradient(
       135deg,
-      rgba(15, 23, 42, 0.96),
-      rgba(15, 23, 42, 0.9)
-    );
+      rgba(15, 23, 42, 0.98),
+      rgba(15, 23, 42, 0.92)
+    )
+      padding-box,
+    linear-gradient(135deg, var(--skill-color1), var(--skill-color2))
+      border-box;
   box-shadow: var(--shadow-soft);
+  padding: 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
-.skills-card h3 {
-  font-size: 1rem;
-  margin-bottom: 0.75rem;
+.skill-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 55px rgba(15, 23, 42, 0.95);
 }
 
-.skills-card ul {
-  display: grid;
-  gap: 0.45rem;
+/* Icon */
+.skill-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.7);
 }
 
-.skills-card li {
-  font-size: 0.9rem;
+.skill-icon i {
+  font-size: 1.5rem;
+  background-image: linear-gradient(
+    135deg,
+    var(--skill-color1),
+    var(--skill-color2)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.skill-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Description: fades in on hover */
+.skill-text {
+  font-size: 0.86rem;
   color: var(--muted);
+  margin-top: 0.1rem;
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(4px);
+  overflow: hidden;
+  transition:
+    opacity 0.2s ease,
+    max-height 0.25s ease,
+    transform 0.2s ease;
 }
 
+.skill-card:hover .skill-text {
+  opacity: 1;
+  max-height: 80px;
+  transform: translateY(0);
+}
+
+/* Color variants per skill (nice and colorful for light theme too) */
+.skill-card--dev {
+  --skill-color1: #4f46e5;
+  --skill-color2: #22d3ee;
+}
+
+.skill-card--ui {
+  --skill-color1: #ec4899;
+  --skill-color2: #f97316;
+}
+
+.skill-card--brand {
+  --skill-color1: #a855f7;
+  --skill-color2: #22c55e;
+}
+
+.skill-card--video {
+  --skill-color1: #fbbf24;
+  --skill-color2: #ef4444;
+}
+
+.skill-card--photo {
+  --skill-color1: #38bdf8;
+  --skill-color2: #8b5cf6;
+}
 /* ==============================
    PROJECTS
    ============================== */
@@ -846,7 +930,7 @@ body {
   text-align: center;
   padding: 0.9rem 0.9rem 1rem;  /* tighter card */
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
+
   background: linear-gradient(
       135deg,
       rgba(15, 23, 42, 0.96),
@@ -857,6 +941,8 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 0.35rem;                 /* small gap between logo and text */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+
 }
 
 .client-logo {
@@ -865,7 +951,6 @@ body {
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 0.5rem;
- box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 
   background: #ffffff;  /* white circle for logo background */
   display: flex;
@@ -1251,6 +1336,8 @@ textarea:focus {
   --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.08);
 }
 
+
+
 /* Header & footer adjust to light */
 .light-theme .header {
   background:
@@ -1298,6 +1385,16 @@ textarea:focus {
   background: #ffffff;
   box-shadow: 0 16px 35px rgba(15, 23, 42, 0.06);
 }
+
+.light-theme .about-highlights,
+.light-theme .skill-card,
+.light-theme .project-content,
+.light-theme .contact-info,
+.light-theme .contact-form {
+  background: #ffffff;
+  box-shadow: 0 16px 35px rgba(15, 23, 42, 0.06);
+}
+
 .light-theme .hero-content {
   background: #ffffff;
   border-color: rgba(148, 163, 184, 0.55);
