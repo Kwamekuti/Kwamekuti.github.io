@@ -223,96 +223,47 @@ window.addEventListener('scroll', () => {
   }
 
 
-   const clientsTrack = document.querySelector(".clients-track");
-const prevClientsBtn = document.querySelector(".clients-arrow--prev");
-const nextClientsBtn = document.querySelector(".clients-arrow--next");
+   /* ==============================
+     CLIENTS SLIDER (MANUAL ONLY)
+     ============================== */
+  const clientsTrack = document.querySelector(".clients-track");
+  const prevClientsBtn = document.querySelector(".clients-arrow--prev");
+  const nextClientsBtn = document.querySelector(".clients-arrow--next");
 
-if (clientsTrack) {
-  const cards = Array.from(clientsTrack.querySelectorAll(".client-card"));
-  const count = cards.length;
+  if (clientsTrack) {
+    const clientCards = Array.from(
+      clientsTrack.querySelectorAll(".client-card")
+    );
 
-  if (count > 1) {
-    // Clone before & after
-    cards.forEach(card => {
-      clientsTrack.appendChild(card.cloneNode(true));
-      clientsTrack.insertBefore(card.cloneNode(true), clientsTrack.firstChild);
-    });
+    // How far to scroll = width of one card (including gap)
+    function getScrollAmount() {
+      const firstCard = clientCards[0];
+      if (!firstCard) return clientsTrack.clientWidth;
 
-    let allCards = Array.from(clientsTrack.querySelectorAll(".client-card"));
-    let cardWidth = allCards[0].offsetWidth +
-      parseInt(getComputedStyle(allCards[0]).marginRight || 0);
+      const cardRect = firstCard.getBoundingClientRect();
+      const style = window.getComputedStyle(firstCard);
+      const gapRight = parseFloat(style.marginRight) || 0;
 
-    let index = count; // start in middle
-    let autoId = null;
+      return cardRect.width + gapRight;
+    }
 
-    function scrollToIndex(i, smooth = true) {
-      clientsTrack.scrollTo({
-        left: i * cardWidth,
-        behavior: smooth ? "smooth" : "auto",
+    function scrollByOne(direction) {
+      clientsTrack.scrollBy({
+        left: direction * getScrollAmount(),
+        behavior: "smooth",
       });
-      index = i;
     }
-
-    function normalize() {
-      if (index >= count * 2) {
-        scrollToIndex(count, false);
-      }
-      if (index <= count - 1) {
-        scrollToIndex(count * 2 - 1, false);
-      }
-    }
-
-    function next() {
-      scrollToIndex(index + 1);
-      setTimeout(normalize, 400);
-    }
-
-    function prev() {
-      scrollToIndex(index - 1);
-      setTimeout(normalize, 400);
-    }
-
-    function startAuto() {
-      if (!autoId) autoId = setInterval(next, 3000);
-    }
-
-    function stopAuto() {
-      clearInterval(autoId);
-      autoId = null;
-    }
-
-    // Init
-    scrollToIndex(index, false);
-    startAuto();
 
     // Arrows
-    prevClientsBtn?.addEventListener("click", () => {
-      stopAuto();
-      prev();
-      startAuto();
-    });
+    if (prevClientsBtn) {
+      prevClientsBtn.addEventListener("click", () => scrollByOne(-1));
+    }
+    if (nextClientsBtn) {
+      nextClientsBtn.addEventListener("click", () => scrollByOne(1));
+    }
 
-    nextClientsBtn?.addEventListener("click", () => {
-      stopAuto();
-      next();
-      startAuto();
-    });
-
-    // Pause on hover
-    clientsTrack.addEventListener("mouseenter", stopAuto);
-    clientsTrack.addEventListener("mouseleave", startAuto);
-
-    // Resize fix
-    window.addEventListener("resize", () => {
-      cardWidth = allCards[0].offsetWidth +
-        parseInt(getComputedStyle(allCards[0]).marginRight || 0);
-      scrollToIndex(index, false);
-    });
+    // Users can still scroll / swipe horizontally themselves; no autoplay here.
   }
-}
-
-
-
 
   
   /* ==============================
